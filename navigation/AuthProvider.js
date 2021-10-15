@@ -6,7 +6,9 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
-
+  const [selectedFrom, setSelectedFrom] = useState("Dhaka");
+  const [selectedTo, setSelectedTo] = useState("Chittagong");
+  const [selectedTime, setSelectedTime] = useState("10 am");
   return (
     <AuthContext.Provider
       value={{
@@ -53,6 +55,12 @@ export const AuthProvider = ({children}) => {
             console.log(e);
           }
         },
+        selectedFrom,
+        selectedTo,
+        selectedTime,
+        setSelectedFrom,
+        setSelectedTo,
+        setSelectedTime
       }}>
       {children}
     </AuthContext.Provider>
