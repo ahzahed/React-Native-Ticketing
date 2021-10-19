@@ -8,7 +8,8 @@ export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [selectedFrom, setSelectedFrom] = useState("Dhaka");
   const [selectedTo, setSelectedTo] = useState("Chittagong");
-  const [selectedTime, setSelectedTime] = useState("10 am");
+  const [selectedTime, setSelectedTime] = useState("10am");
+  const [busInfoFromStore, setBusInfoFromStore] = useState(null);
   return (
     <AuthContext.Provider
       value={{
@@ -60,7 +61,9 @@ export const AuthProvider = ({children}) => {
         selectedTime,
         setSelectedFrom,
         setSelectedTo,
-        setSelectedTime
+        setSelectedTime,
+        busInfoFromStore,
+        setBusInfoFromStore
       }}>
       {children}
     </AuthContext.Provider>

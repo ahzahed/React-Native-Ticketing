@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { AuthContext } from '../navigation/AuthProvider'
 import { Picker } from '@react-native-picker/picker'
-
+import firestore from '@react-native-firebase/firestore';
 const HomeScreen = ({navigation}) => {
     const {
         user, 
@@ -12,8 +12,34 @@ const HomeScreen = ({navigation}) => {
         selectedTime,
         setSelectedFrom,
         setSelectedTo,
-        setSelectedTime
-        } = useContext(AuthContext)
+        setSelectedTime,
+        busInfoFromStore,
+        setBusInfoFromStore
+    } = useContext(AuthContext)
+
+    // getting single Bus Information
+    let busId = `${selectedFrom}-${selectedTo}-${selectedTime}`
+    const getSingleBusInformation = async (busId) => {
+        const busRef = firestore().doc(`bus/${busId}`);
+
+        try {
+            const snapShot = await busRef.get();
+            if (snapShot.exists) {
+                // console.log(snapShot.data());
+                setBusInfoFromStore(snapShot.data())
+                // return snapShot.data();
+                return;
+            } else {
+            await busRef.set({
+                bookedSeats: [],
+            });
+            const updatedSnapShot = await busRef.get();
+            return updatedSnapShot.data();
+            }
+        } catch (error) {
+            return null;
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -53,20 +79,24 @@ const HomeScreen = ({navigation}) => {
                 style={{ height: 50, width: 200, backgroundColor: "white", marginBottom: 20 }}
                 onValueChange={(itemValue, itemIndex) => setSelectedTime(itemValue)}
             >
-                {<Picker.Item label="10 am" value="10 am" />}
-                {<Picker.Item label="11 am" value="11 am" />}
-                {<Picker.Item label="12 am" value="12 am" />}
-                {<Picker.Item label="1 pm" value="1 pm" />}
-                {<Picker.Item label="2 pm" value="2 pm" />}
-                {<Picker.Item label="3 pm" value="3 pm" />}
-                {<Picker.Item label="4 pm" value="4 pm" />}
-                {<Picker.Item label="5 pm" value="5 pm" />}
-                {<Picker.Item label="6 pm" value="6 pm" />}
+                {<Picker.Item label="10am" value="10am" />}
+                {<Picker.Item label="11am" value="11am" />}
+                {<Picker.Item label="12am" value="12am" />}
+                {<Picker.Item label="1pm" value="1pm" />}
+                {<Picker.Item label="2pm" value="2pm" />}
+                {<Picker.Item label="3pm" value="3pm" />}
+                {<Picker.Item label="4pm" value="4pm" />}
+                {<Picker.Item label="5pm" value="5pm" />}
+                {<Picker.Item label="6pm" value="6pm" />}
             </Picker>
             <Button
                 title="Next"
                 color="#841584"
-                onPress={()=>{navigation.navigate('Seat')}}
+                onPress={()=>{
+                            getSingleBusInformation(busId);
+                            navigation.navigate('Seat')
+                        }
+                        }
             />
         </View>
     )
