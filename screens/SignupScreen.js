@@ -33,6 +33,7 @@ const SignupScreen = ({navigation}) => {
         iconType="lock"
         secureTextEntry={true}
       />
+      <Text>Password must be 8 character.</Text>
 
       <FormInput
         labelValue={confirmPassword}
@@ -62,7 +63,7 @@ const SignupScreen = ({navigation}) => {
         </Text>
       </View>
 
-      {Platform.OS === 'android' ? (
+      {/* {Platform.OS === 'android' ? (
         <View>
           <SocialButton
             buttonTitle="Sign Up with Facebook"
@@ -80,7 +81,7 @@ const SignupScreen = ({navigation}) => {
             onPress={() => {}}
           />
         </View>
-      ) : null}
+      ) : null} */}
 
       <TouchableOpacity
         style={styles.navButton}
