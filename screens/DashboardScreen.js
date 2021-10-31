@@ -55,9 +55,7 @@ const DashboardScreen = ({navigation}) => {
           borderRadius: 5,
           marginTop: 10,
         }}>
-        <Text style={{color: 'black', fontSize: 20}}>
-          {user.email}{' '}
-        </Text>
+        <Text style={{color: 'black', fontSize: 20}}>{user.email} </Text>
         <Button title="Logout" onPress={() => logout()} />
       </View>
       {loggedUserBookedSeat.length > 0 ? (
@@ -76,7 +74,10 @@ const DashboardScreen = ({navigation}) => {
                 Bus Id: {item.busId}
               </Text>
               <Text style={{color: 'black', fontSize: 20}} key={index}>
-                Seat Number: {item.bookedSeats.map(seat=><Text>{seat} </Text>)}
+                Seat Number:{' '}
+                {item.bookedSeats.map((seat, index) => (
+                  <Text key={index}>{seat} </Text>
+                ))}
               </Text>
             </View>
           );
