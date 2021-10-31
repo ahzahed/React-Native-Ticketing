@@ -6,7 +6,8 @@ import {
   Image,
   Platform,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Alert,
 } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
@@ -14,8 +15,8 @@ import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigation/AuthProvider';
 
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const {login, googleLogin, fbLogin} = useContext(AuthContext);
 
@@ -25,12 +26,12 @@ const LoginScreen = ({navigation}) => {
         source={require('../assets/rn-social-logo.png')}
         style={styles.logo}
       />
-      
+
       <Text style={styles.text}>Log In</Text>
 
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => setEmail(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
@@ -40,7 +41,7 @@ const LoginScreen = ({navigation}) => {
 
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => setPassword(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
@@ -48,10 +49,14 @@ const LoginScreen = ({navigation}) => {
 
       <FormButton
         buttonTitle="Sign In"
-        onPress={() => login(email, password)}
+        onPress={() => {
+          email == '' || password == ''
+            ? Alert.alert('All fields are required!')
+            : login(email, password);
+        }}
         // onPress={() => alert("Sign in clicked!")}
       />
-{/* 
+      {/* 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navButtonText}>Forgot Password?</Text>
       </TouchableOpacity> */}
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 50
+    paddingTop: 50,
   },
   logo: {
     height: 150,

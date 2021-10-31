@@ -8,14 +8,13 @@ const DashboardScreen = ({navigation}) => {
   const {user, logout} = useContext(AuthContext);
   const [loggedUserBookedSeat, setLoggedUserBookedSeat] = useState([]);
   const [loading, setLoading] = useState(true);
-  //   console.log(user.uid);
   const getUser = async userId => {
     const userRef = firestore().doc(`users/${userId}`);
     try {
       const snapShot = await userRef.get();
       if (snapShot.exists) {
-        // console.log(snapShot.data().bookedSeats);
-        setLoggedUserBookedSeat(snapShot.data().bookedSeats);
+        snapShot.data().bookedSeats &&
+          setLoggedUserBookedSeat(snapShot.data().bookedSeats);
         setLoading(false);
         return;
       } else {
@@ -43,15 +42,21 @@ const DashboardScreen = ({navigation}) => {
   }
   return (
     <View style={styles.container}>
+      <Button
+        title="Home"
+        onPress={() => navigation.navigate('Home')}
+        color="blue"
+      />
       <View
         style={{
           flexDirection: 'row',
           backgroundColor: 'white',
           padding: 15,
           borderRadius: 5,
+          marginTop: 10,
         }}>
         <Text style={{color: 'black', fontSize: 20}}>
-          Welcome, {user.email}{' '}
+          {user.email}{' '}
         </Text>
         <Button title="Logout" onPress={() => logout()} />
       </View>
@@ -71,7 +76,7 @@ const DashboardScreen = ({navigation}) => {
                 Bus Id: {item.busId}
               </Text>
               <Text style={{color: 'black', fontSize: 20}} key={index}>
-                Seat Number: {item.bookedSeats}
+                Seat Number: {item.bookedSeats.map(seat=><Text>{seat} </Text>)}
               </Text>
             </View>
           );

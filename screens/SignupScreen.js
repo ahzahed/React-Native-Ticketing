@@ -1,24 +1,36 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity, Platform, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import SocialButton from '../components/SocialButton';
 import {AuthContext} from '../navigation/AuthProvider';
 
 const SignupScreen = ({navigation}) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const {register} = useContext(AuthContext);
-
+  function ValidateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    }
+    Alert.alert('You have entered an invalid email address!');
+    return false;
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Create an account</Text>
 
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => setEmail(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
@@ -28,16 +40,16 @@ const SignupScreen = ({navigation}) => {
 
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => setPassword(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
       />
-      <Text>Password must be 8 character.</Text>
+      <Text>Password must be 6 character.</Text>
 
       <FormInput
         labelValue={confirmPassword}
-        onChangeText={(userPassword) => setConfirmPassword(userPassword)}
+        onChangeText={userPassword => setConfirmPassword(userPassword)}
         placeholderText="Confirm Password"
         iconType="lock"
         secureTextEntry={true}
@@ -45,7 +57,11 @@ const SignupScreen = ({navigation}) => {
 
       <FormButton
         buttonTitle="Sign Up"
-        onPress={() => register(email, password)}
+        onPress={() => {
+          email == '' || password == '' || confirmPassword == ''
+            ? Alert.alert('All fields are required!')
+            : ValidateEmail(email) && register(email, password);
+        }}
       />
 
       <View style={styles.textPrivate}>

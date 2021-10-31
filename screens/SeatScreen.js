@@ -13,10 +13,8 @@ import firestore from '@react-native-firebase/firestore';
 const SeatScreen = ({navigation}) => {
   const {selectedFrom, selectedTo, selectedTime, user, busInfoFromStore} =
     useContext(AuthContext);
-//   console.log(user);
   const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
   const [checkBookedSeatStore, setCheckBookedSeatStore] = useState([]);
-  // console.log(checkBookedSeatStore);
   const onClickItem = seatNo => {
     const isBookedInStore = checkBookedSeatStore.find(item => item === seatNo);
     if (isBookedInStore) {
@@ -528,7 +526,7 @@ const SeatScreen = ({navigation}) => {
                   [
                     {
                       text: 'Understood',
-                      onPress: () => navigation.navigate('Dashboard'),
+                      onPress: () => navigation.navigate('Home'),
                     },
                   ],
                 )

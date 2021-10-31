@@ -25,7 +25,6 @@ const HomeScreen = ({navigation}) => {
         try {
             const snapShot = await busRef.get();
             if (snapShot.exists) {
-                // console.log(snapShot.data());
                 setBusInfoFromStore(snapShot.data())
                 // return snapShot.data();
                 return;
