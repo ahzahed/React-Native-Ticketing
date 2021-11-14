@@ -11,10 +11,19 @@ import {
 import firestore from '@react-native-firebase/firestore';
 
 const SeatScreen = ({navigation}) => {
-  const {selectedFrom, selectedTo, selectedTime, user, busInfoFromStore} =
-    useContext(AuthContext);
-  const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
+  const {
+    selectedFrom,
+    selectedTo,
+    selectedTime,
+    user,
+    busInfoFromStore,
+    busName,
+    selectedSeat,
+    setSelectedSeat,
+  } = useContext(AuthContext);
+  // const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
   const [checkBookedSeatStore, setCheckBookedSeatStore] = useState([]);
+
   const onClickItem = seatNo => {
     const isBookedInStore = checkBookedSeatStore.find(item => item === seatNo);
     if (isBookedInStore) {
@@ -48,7 +57,7 @@ const SeatScreen = ({navigation}) => {
   }, []);
 
   let bookingObj = {
-    busId: `${selectedFrom}-${selectedTo}-${selectedTime}`,
+    busId: `${selectedFrom}-${selectedTo}-${selectedTime}-${busName}`,
     bookedSeats: selectedSeat.bookedSeats,
     userId: user.uid,
   };
@@ -526,7 +535,7 @@ const SeatScreen = ({navigation}) => {
                   [
                     {
                       text: 'Understood',
-                      onPress: () => navigation.navigate('Home'),
+                      onPress: () => navigation.navigate('Payment'),
                     },
                   ],
                 )

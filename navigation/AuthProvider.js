@@ -11,6 +11,9 @@ export const AuthProvider = ({children}) => {
   const [selectedTo, setSelectedTo] = useState('Chittagong');
   const [selectedTime, setSelectedTime] = useState('10am');
   const [busInfoFromStore, setBusInfoFromStore] = useState(null);
+  const [busName, setBusName] = useState('greenline');
+  const [price, setPrice] = useState('1000');
+   const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
   return (
     <AuthContext.Provider
       value={{
@@ -51,7 +54,7 @@ export const AuthProvider = ({children}) => {
               })
               //we need to catch the whole sign up process if it fails too.
               .catch(error => {
-                Alert.alert("This email has already used");
+                Alert.alert('This email has already used');
                 console.log('Something went wrong with sign up: ', error);
               });
           } catch (e) {
@@ -73,6 +76,12 @@ export const AuthProvider = ({children}) => {
         setSelectedTime,
         busInfoFromStore,
         setBusInfoFromStore,
+        busName,
+        setBusName,
+        price,
+        setPrice,
+        selectedSeat,
+        setSelectedSeat,
       }}>
       {children}
     </AuthContext.Provider>
