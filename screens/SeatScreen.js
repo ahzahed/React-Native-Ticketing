@@ -23,6 +23,7 @@ const SeatScreen = ({navigation}) => {
   } = useContext(AuthContext);
   // const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
   const [checkBookedSeatStore, setCheckBookedSeatStore] = useState([]);
+  const [seatLoading, setSeatLoading] = useState(true);
 
   const onClickItem = seatNo => {
     const isBookedInStore = checkBookedSeatStore.find(item => item === seatNo);
@@ -51,6 +52,7 @@ const SeatScreen = ({navigation}) => {
     const busRef = firestore().doc(`bus/${bookingObj.busId}`);
     const snapShot = await busRef.get();
     setCheckBookedSeatStore(snapShot.data().bookedSeats);
+    setSeatLoading(false);
   };
   useEffect(() => {
     getBookedSeatFromStore();
@@ -125,6 +127,13 @@ const SeatScreen = ({navigation}) => {
   //     }
   // };
 
+  if (seatLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading....</Text>
+      </View>
+    );
+  }
   return (
     <View
       style={{

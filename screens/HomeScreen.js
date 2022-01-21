@@ -40,29 +40,33 @@ const HomeScreen = ({navigation}) => {
     if (busName == 'hanif') {
       setPrice('1300');
     }
+    if (busName == 'hanifac') {
+      setPrice('1800');
+    }
     if (busName == 'symoly') {
       setPrice('1200');
     }
   }, [busName]);
-  useEffect(() => {
-    if (
-      selectedFrom !== 'Dhaka' &&
-      (selectedTo == 'Chittagong' ||
-        selectedTo == 'Rajshahi' ||
-        selectedTo == 'Sylhet')
-    ) {
-      Alert.alert(
-        'Sorry!',
-        'Currently, Dhaka To Anywhere || Anywhere To Dhaka Services are avaiable.',
-        [
-          {
-            text: 'Ok',
-            onPress: () => setSelectedFrom('Dhaka'),
-          },
-        ],
-      );
-    }
-  }, [selectedFrom, selectedTo]);
+
+  // useEffect(() => {
+  //   if (
+  //     selectedFrom !== 'Dhaka' &&
+  //     (selectedTo == 'Chittagong' ||
+  //       selectedTo == 'Rajshahi' ||
+  //       selectedTo == 'Sylhet')
+  //   ) {
+  //     Alert.alert(
+  //       'Sorry!',
+  //       'Currently, Dhaka To Anywhere || Anywhere To Dhaka Services are avaiable.',
+  //       [
+  //         {
+  //           text: 'Ok',
+  //           onPress: () => setSelectedFrom('Dhaka'),
+  //         },
+  //       ],
+  //     );
+  //   }
+  // }, [selectedFrom, selectedTo]);
 
   // getting single Bus Information
   let busId = `${selectedFrom}-${selectedTo}-${selectedTime}-${busName}`;
@@ -124,7 +128,7 @@ const HomeScreen = ({navigation}) => {
           selectedValue={selectedTo}
           style={{height: 50, width: 200, backgroundColor: 'white'}}
           onValueChange={(itemValue, itemIndex) => setSelectedTo(itemValue)}>
-          {<Picker.Item label="Select Destination"/>}
+          {<Picker.Item label="Select Destination" />}
           {selectedFrom !== 'Dhaka' && (
             <Picker.Item label="Dhaka" value="Dhaka" />
           )}
@@ -164,6 +168,7 @@ const HomeScreen = ({navigation}) => {
           }}
           onValueChange={(itemValue, itemIndex) => setBusName(itemValue)}>
           {<Picker.Item label="Select Bus" />}
+
           {/* {((selectedFrom === 'Dhaka' && selectedTo === 'Chittagong') ||
             (selectedFrom === 'Chittagong' && selectedTo === 'Dhaka')) && (
             <>
@@ -172,6 +177,8 @@ const HomeScreen = ({navigation}) => {
               <Picker.Item label="Star Line AC" value="starlineac" />
             </>
           )} */}
+
+          {/* Dhaka to anywhere, anywhere to Dhaka Start */}
           {((selectedFrom === 'Dhaka' && selectedTo === 'Chittagong') ||
             (selectedFrom === 'Chittagong' && selectedTo === 'Dhaka')) && (
             <Picker.Item label="Green Line" value="greenline" />
@@ -202,6 +209,26 @@ const HomeScreen = ({navigation}) => {
             (selectedFrom === 'Rajshahi' && selectedTo === 'Dhaka')) && (
             <Picker.Item label="Symoly" value="symoly" />
           )}
+          {/* Dhaka to anywhere, anywhere to Dhaka End */}
+
+          {/* Chittagong Division Start */}
+          {((selectedFrom === 'Chittagong' && selectedTo === 'Rajshahi') ||
+            (selectedFrom === 'Rajshahi' && selectedTo === 'Chittagong')) && (
+            <Picker.Item label="Green Line" value="greenline" />
+          )}
+          {((selectedFrom === 'Chittagong' && selectedTo === 'Sylhet') ||
+            (selectedFrom === 'Sylhet' && selectedTo === 'Chittagong')) && (
+            <Picker.Item label="Hanif AC" value="hanifac" />
+          )}
+          {/* Chittagong Division End */}
+
+          {/* Rajshahi Division Start */}
+          {((selectedFrom === 'Rajshahi' && selectedTo === 'Sylhet') ||
+            (selectedFrom === 'Sylhet' && selectedTo === 'Rajshahi')) && (
+            <Picker.Item label="Hanif AC" value="hanifac" />
+          )}
+          {/* Rajshahi Division End */}
+          
         </Picker>
         <Text
           style={{
