@@ -64,6 +64,7 @@ const SeatScreen = ({navigation}) => {
     userId: user.uid,
   };
   const bookingForSeats = async bookingObj => {
+    
     // update user document with newly booked seats
     const userRef = firestore().doc(`users/${bookingObj.userId}`);
     const userSanpShot = await userRef.get();
@@ -534,6 +535,7 @@ const SeatScreen = ({navigation}) => {
       <TouchableOpacity
         style={styles.appButtonContainer}
         onPress={() => {
+      
           bookingForSeats(bookingObj);
           // navigation.navigate('Home')
           {

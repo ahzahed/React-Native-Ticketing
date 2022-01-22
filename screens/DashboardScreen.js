@@ -8,6 +8,7 @@ const DashboardScreen = ({navigation}) => {
   const {user, logout} = useContext(AuthContext);
   const [loggedUserBookedSeat, setLoggedUserBookedSeat] = useState([]);
   const [loading, setLoading] = useState(true);
+ 
   const getUser = async userId => {
     const userRef = firestore().doc(`users/${userId}`);
     try {

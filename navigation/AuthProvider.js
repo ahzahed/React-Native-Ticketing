@@ -13,7 +13,7 @@ export const AuthProvider = ({children}) => {
   const [busInfoFromStore, setBusInfoFromStore] = useState(null);
   const [busName, setBusName] = useState('greenline');
   const [price, setPrice] = useState('1000');
-   const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
+  const [selectedSeat, setSelectedSeat] = useState({bookedSeats: []});
   return (
     <AuthContext.Provider
       value={{
@@ -38,11 +38,9 @@ export const AuthProvider = ({children}) => {
                   .collection('users')
                   .doc(auth().currentUser.uid)
                   .set({
-                    fname: '',
-                    lname: '',
+                    bookedSeats: [],
                     email: email,
                     createdAt: firestore.Timestamp.fromDate(new Date()),
-                    userImg: null,
                   })
                   //ensure we catch any errors at this stage to advise us if something does go wrong
                   .catch(error => {

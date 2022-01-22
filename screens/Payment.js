@@ -3,7 +3,7 @@ import {Button, StyleSheet, Text, ScrollView, View, Alert} from 'react-native';
 import {AuthContext} from '../navigation/AuthProvider';
 
 const Payment = ({navigation}) => {
-  const {selectedSeat, price} = useContext(AuthContext);
+  const {selectedSeat, setSelectedSeat, price} = useContext(AuthContext);
 
   return (
     <ScrollView>
@@ -20,7 +20,8 @@ const Payment = ({navigation}) => {
         </Text>
         <Button
           title="Pay Now"
-          onPress={() =>
+          onPress={() => {
+            setSelectedSeat({bookedSeats: []});
             Alert.alert(
               'Thank You!',
               `You payment BDT ${
@@ -32,8 +33,8 @@ const Payment = ({navigation}) => {
                   onPress: () => navigation.navigate('Home'),
                 },
               ],
-            )
-          }
+            );
+          }}
         />
       </View>
     </ScrollView>
